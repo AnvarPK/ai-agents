@@ -1,0 +1,11 @@
+site_name: AI Agents
+# site_url: ai-agents.anvarpk.com
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Course: 
+      Day 1: course/day-1.md
+      Day 2: course/day-2.md
+      Day 3: course/day-3.md
+      Day 4: course/day-4.md
