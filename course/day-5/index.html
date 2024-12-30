@@ -1,0 +1,667 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../day-4/">
+      
+      
+        <link rel="next" href="../day-6/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Day 5 - AI Agents</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#day-5-integrating-llms-with-ai-agents" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Agents" class="md-header__button md-logo" aria-label="AI Agents" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Agents
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Day 5
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Agents" class="md-nav__button md-logo" aria-label="AI Agents" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Agents
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Course
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Course
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Day 5
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Day 5
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-llms-matter-for-ai-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why LLMs Matter for AI Agents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-integration-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Integration Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-importance-of-function-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Importance of Function Calling
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 9
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-llms-matter-for-ai-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why LLMs Matter for AI Agents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-integration-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Integration Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-importance-of-function-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Importance of Function Calling
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="day-5-integrating-llms-with-ai-agents">Day 5: Integrating LLMs with AI Agents</h1>
+<p>Today, we’ll focus on one of the most transformative technologies in this space: LLMs, and how they serve as the “brain” for your AI Agents.</p>
+<h3 id="why-llms-matter-for-ai-agents">Why LLMs Matter for AI Agents</h3>
+<p>At their core, AI Agents need a way to understand context, interpret user input, and generate coherent responses. Traditionally, this required intricate rules or extensive domain-specific training. LLMs, however, have changed the game by providing a versatile and powerful language understanding layer that can adapt to various tasks with minimal tuning.</p>
+<p>By integrating an LLM into your agent’s architecture, you can:</p>
+<ul>
+<li><strong>Enhance Language Understanding:</strong> LLMs can interpret subtle human language, handling complex queries and ambiguous user inputs far better than rule-based systems.</li>
+<li><strong>Personalize Interactions:</strong> With context-awareness and memory, your agent can tailor responses to individual users, reflect company-specific knowledge, and maintain consistent messaging over time.</li>
+<li><strong>Boost Reliability:</strong> As LLMs learn from vast and diverse datasets, they’re better equipped to handle edge cases and unexpected requests, reducing the need for constant manual updates.</li>
+</ul>
+<p><em>Note: Most frameworks for building AI Agents are LLM-agnostic, meaning you can choose the LLM that best fits your performance, cost, and domain requirements.</em></p>
+<h3 id="how-integration-works">How Integration Works</h3>
+<ol>
+<li><strong>Perception Through Language:</strong>
+   Your agent sends raw user input — questions, commands, or descriptions— directly to the LLM. The LLM processes the input, interpreting intent, extracting key details, and returning a structured understanding for the agent to reason about.</li>
+<li><strong>Reasoning &amp; Planning:</strong>
+   Once the LLM provides a rich linguistic and contextual interpretation, your agent’s reasoning components take over. With a stronger “mental model” provided by the LLM, the agent can weigh possible actions, recall relevant knowledge from memory, and draft a plan to achieve its goals.</li>
+<li><strong>Action &amp; Feedback Loop:</strong>
+   The agent then executes its chosen actions. After receiving new data or user feedback, it queries the LLM again as needed, continually refining its understanding and improving the quality of its decisions.</li>
+</ol>
+<p><br>
+<img alt="1735601296028" src="../images/day-5/1735601296028.png" /></p>
+<h3 id="the-importance-of-function-calling">The Importance of Function Calling</h3>
+<p>A key mechanism that makes LLMs even more powerful within AI Agents is <strong>function calling</strong>. Function calling allows your LLM to seamlessly integrate with external tools and APIs:</p>
+<ol>
+<li><strong>Structured Output:</strong> Instead of returning just free-form text, LLMs can respond with structured function calls—like a JSON object containing parameters. This ensures that outputs are machine-readable and reduces ambiguity, allowing your agent to parse results reliably and consistently.</li>
+<li><strong>Dynamic Behavior:</strong> With function calling, your agent can dynamically decide which external functions or APIs to use based on user queries. For example, if a user asks for today’s weather, the LLM can “call” the appropriate weather API automatically, retrieve fresh data, and incorporate it into its response.</li>
+<li><strong>Safe and Controlled Execution:</strong> By defining which functions are available to the agent, you control what actions the LLM can trigger. This creates a sandboxed environment where the LLM’s capabilities are guided and restricted, improving reliability, security, and safety.</li>
+</ol>
+<p>There’s a lot of innovation in the Tool Calling space, which will unlock real autonomous actions by AI and developers can easily create new tools to add into a catalog.</p>
+<p><br>
+<img alt="1735601372690" src="../images/day-5/1735601372690.png" />
+<br>
+<br></p>
+<p>Integrating function calling into your LLM-based agent transforms the agent from a passive respondent into an active problem-solver—one that not only processes language but also performs tasks and retrieves information on-demand.
+<br><br></p>
+<p>So, which LLM is best for Function Calling? There is the <a href="https://link.mail.beehiiv.com/ss/c/u001.bZk3R2gdQ8b05uWnqBcbJOj_g5p_UuZSxUB5SYXqvFCC2MXdhiRofHcO6eaZSY2ERtqXpGnGvL0yggii5_HMpOCeFAKd2vy2ZIaBXJcp6yVJ6bsuux07Jb5ByRtkpppXS00EQqrp1Nlq6T7_7TK8Km91CNIvskRlpPvj24bvE_frSW9EFU0esN9h0d2JWi_mX-FNw9rVgMLcbPdLhsNGFKDwSWIplS6J5Hyuqyk6p24/4cm/MZZiFnbfR3WthqpZAsuG2g/h4/h001.sbl0Frq9Qhsbo6mzzOivMswe9gSI8KtjwJ9g6z350e0">Berkeley Function-Calling Leaderboard</a> that evaluates the LLM’s ability to call tools accurately.
+<br><br>
+The<a href="https://link.mail.beehiiv.com/ss/c/u001.Py1voVJ44BthYsIqzrNF9dxbpe_qx1peiIqcr7kiNzAglZ-mUIH6mNCfFMbnVVJsu3aKad7s_LyldpC_CLXRG3fG0bN5-quBjj68MB3FVLPzp6YXnKj9mgp9z9KTf5_JHIUnhw31QUpNwjTBbuEGOKnUdiobIvhsfruRoeJrRmfk2gIvWiCE7d_FR2Qys9DOG-CFqJveEJ_-QWujh9QRe1mbRbFVD8A8azqX14uhlWM/4cm/MZZiFnbfR3WthqpZAsuG2g/h5/h001.K5ipuO9pvgNdt1NT2kiEelR3E4fA7iU3wE34X4Hc4Hw"> NPHardEval leaderboard</a> is another important benchmark for assessing the reasoning abilities of LLMs through the lens of computation complexity classes.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,763 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../day-6/">
+      
+      
+        <link rel="next" href="../day-8/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Day 7 - AI Agents</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#day-7-evaluating-and-measuring-agent-performance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Agents" class="md-header__button md-logo" aria-label="AI Agents" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Agents
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Day 7
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Agents" class="md-nav__button md-logo" aria-label="AI Agents" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Agents
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Course
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Course
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Day 7
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Day 7
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-major-problem-with-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Major Problem with Agents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#four-key-types-of-metrics-for-ai-agent-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Four Key Types of Metrics for AI Agent Performance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-studies-transforming-ai-agents-into-reliable-colleagues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Studies: Transforming AI Agents into Reliable Colleagues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-simple-metrics-to-sophisticated-judging-paradigms" class="md-nav__link">
+    <span class="md-ellipsis">
+      From Simple Metrics to Sophisticated Judging Paradigms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leveraging-frameworks-and-tools-for-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leveraging Frameworks and Tools for Evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-lessons-for-the-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Lessons for the Future
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day-9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Day 9
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-major-problem-with-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Major Problem with Agents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#four-key-types-of-metrics-for-ai-agent-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Four Key Types of Metrics for AI Agent Performance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-studies-transforming-ai-agents-into-reliable-colleagues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Studies: Transforming AI Agents into Reliable Colleagues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-simple-metrics-to-sophisticated-judging-paradigms" class="md-nav__link">
+    <span class="md-ellipsis">
+      From Simple Metrics to Sophisticated Judging Paradigms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leveraging-frameworks-and-tools-for-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leveraging Frameworks and Tools for Evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-lessons-for-the-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Lessons for the Future
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="day-7-evaluating-and-measuring-agent-performance">Day 7: Evaluating and Measuring Agent Performance</h1>
+<p>Today’s AI agents must be measured across multiple dimensions—accuracy, efficiency, reliability, adaptability, and cost—to ensure they deliver real, sustained business value.</p>
+<h3 id="a-major-problem-with-agents">A Major Problem with Agents</h3>
+<p>The rapid adoption of AI agents across industries— from healthcare to finance —has highlighted new measurement challenges. Unlike traditional software, AI agents:</p>
+<ul>
+<li>Exhibit behavior that varies with input complexity</li>
+<li>Can degrade subtly in performance over time</li>
+<li>Often require multi-dimensional success criteria</li>
+</ul>
+<p>Without careful evaluation, organizations risk agent “drift” and missed opportunities. Proper metrics help determine where optimization is needed, justify continued AI investments, and ensure that these digital colleagues live up to their promise of efficiency and innovation.</p>
+<h3 id="four-key-types-of-metrics-for-ai-agent-performance">Four Key Types of Metrics for AI Agent Performance</h3>
+<ol>
+<li><strong>System Metrics:</strong> Focus on technical efficiency, resource consumption, and latency. Ensuring your agent runs smoothly, even at scale, prevents workflow bottlenecks and unnecessary costs.</li>
+<li><strong>Task Completion:</strong> Assess whether agents achieve their assigned objectives, from completing claims processing steps to generating accurate tax audits. High task completion rates indicate that agents deliver consistent results without constant human oversight.</li>
+<li><strong>Quality Control:</strong> Evaluate output quality, correctness, and adherence to standards. Quality control metrics catch subtle issues—like incomplete compliance checks or uneven formatting—before they erode trust.</li>
+<li><strong>Tool Interaction:</strong> Monitor how well agents leverage external APIs, databases, and applications. Efficient and accurate tool usage is essential for agents that must dynamically retrieve information or automate multi-step workflows.</li>
+</ol>
+<h3 id="case-studies-transforming-ai-agents-into-reliable-colleagues">Case Studies: Transforming AI Agents into Reliable Colleagues</h3>
+<ol>
+<li><strong>Advancing the Claims Processing Agent (Healthcare)</strong>
+   A healthcare network’s claims processing agent struggled with reliability and compliance. By measuring LLM Call Error Rate, Task Completion Rate, Number of Human Requests, and Token Usage per Interaction, they identified critical inefficiencies and privacy risks. Optimizing these metrics led to faster claims processing, higher compliance accuracy, and reduced rejection rates.</li>
+<li><strong>Optimizing the Tax Audit Agent (Accounting)</strong>
+   A mid-sized accounting firm tackled lengthy audit times, high computing costs, and backlogged work. Metrics like Tool Success Rate, Context Window Utilization, and Steps per Task helped them adapt the agent’s analysis depth and context handling. Result: Faster audits, sharper discrepancy detection, and more efficient resource use.</li>
+<li><strong>Elevating the Stock Analysis Agent (Finance)</strong>
+   An investment firm struggled with redundant analyses and inconsistent report formats. Metrics such as Total Task Completion Time, Output Format Success Rate, and Token Usage per Interaction revealed how to tailor analysis depth and formatting to different roles. The outcome: More precise market insights and improved overall efficiency.</li>
+<li><strong>Upgrading the Coding Agent (Software Development)</strong>
+   A software company’s coding assistant caused disruptions and wasted resources. By focusing on LLM Call Error Rate, Task Success Rate, and Cost per Task Completion, they implemented standardized response templates, better error handling, and resource allocation strategies. The agent now provides more accurate code suggestions and optimizes infrastructure usage.</li>
+<li><strong>Enhancing the Lead Scoring Agent (Sales)</strong>
+   A B2B software firm’s sales team lost confidence in their lead scoring agent. Tracking Token Usage per Interaction, Latency per Tool Call, and Tool Selection Accuracy helped the agent adapt its analysis patterns, accelerate processing, and use the right tool for the right task. The result: Faster prospect qualification, higher accuracy, and better resource utilization.</li>
+</ol>
+<h3 id="from-simple-metrics-to-sophisticated-judging-paradigms">From Simple Metrics to Sophisticated Judging Paradigms</h3>
+<p>As we refine metrics, it’s also essential to consider who or what “judges” agent performance:</p>
+<ul>
+<li><strong>LLM-as-a-Judge:</strong> Quick but surface-level evaluation based on pattern recognition. Useful for initial checks but may miss subtle, domain-specific nuances.</li>
+<li><strong>Agent-as-a-Judge:</strong> Agents can evaluate each other using iterative, context-aware reasoning. This approach supports dynamic optimization and helps identify root causes of performance issues.</li>
+<li><strong>Human-as-a-Judge:</strong> Involving human expertise adds depth, ethical oversight, and contextual interpretation. While not scalable for all tasks, human judgment ensures that AI-driven decisions align with business values and regulatory standards.</li>
+</ul>
+<p>Combining these judging methods can balance automation efficiency with the depth of human intuition.</p>
+<p><br>
+<img alt="1735602642039" src="../images/day-7/1735602642039.png" /></p>
+<h3 id="leveraging-frameworks-and-tools-for-evaluation">Leveraging Frameworks and Tools for Evaluation</h3>
+<p>Evaluation doesn’t have to be built from scratch. Emerging frameworks, integrated development tools, and analytics platforms simplify the collection, visualization, and analysis of metrics. These solutions can:</p>
+<ul>
+<li>Automate performance logging and version tracking across development, staging, and production.</li>
+<li>Provide dashboards and reports that combine system metrics with business KPIs.</li>
+<li>Integrate with CI/CD pipelines, MLOps platforms, or analytics systems to unify evaluation efforts.</li>
+<li>Offer standardized interfaces for leveraging LLM or agent-based judges, easing experimentation and iteration.</li>
+</ul>
+<p>By adopting these frameworks presented in past lessons, teams can seamlessly incorporate advanced evaluation techniques, ensuring their AI agents remain optimized, compliant, and strategically aligned with business goals.
+<br><br></p>
+<p><img alt="1735602705858" src="../images/day-7/1735602705858.png" /></p>
+<h3 id="key-lessons-for-the-future">Key Lessons for the Future</h3>
+<ol>
+<li><strong>Metric-Driven Optimization:</strong> Align metrics with clear business outcomes to guide meaningful improvements.</li>
+<li><strong>Human Workforce Transformation:</strong> As agents become more capable, human roles should shift towards oversight, strategy, and ethical guidance.</li>
+<li><strong>Outcome-Focused Target Setting:</strong> Define what “success” means—better compliance, lower latency, improved customer satisfaction—and measure against these targets.</li>
+<li><strong>Continuous Improvement Cycles:</strong> Regular measurement and refinement ensure agents adapt as conditions change.</li>
+<li><strong>Balanced Automation and Oversight:</strong> AI agents should complement human intelligence, not replace it. Combine automated evaluation with human judgment for a holistic approach.</li>
+</ol>
+<h3 id="putting-it-all-together">Putting It All Together</h3>
+<p>Evaluating your AI Agent isn’t a one-time exercise—it’s an ongoing discipline. By combining quantitative metrics like accuracy and response time with qualitative measures like user feedback and business impact, you’ll gain a holistic view of how well your agent is performing. As you gather insights, feed them back into your development cycle, ensuring your agent evolves to meet new challenges, deliver better results, and maintain user trust.
+<br><br> 
+Stay curious and keep refining your approach. Continuous evaluation is the secret to unlocking your AI Agent’s full potential.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>
